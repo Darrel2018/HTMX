@@ -57,6 +57,12 @@ app.put('/user/:id', (req, res) => {
                     hx-get="/user/1/edit">
                     Click To Edit
                 </button>
+                <button class="btn btn-danger" 
+                        hx-delete="/user/1"
+                        hx-target="closest .card"
+                        hx-swap="outerHTML">
+                    Delete
+                </button>
             </div>
         </div>
     `);
