@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
 from contacts.forms import ContactForm
 
@@ -49,3 +51,38 @@ def create_contact(request):
         response['HX-Reswap'] = 'outerHTML'
         response['HX-Trigger-After-Settle'] = 'fail'
         return response
+
+
+@login_required
+@require_http_methods(["DELETE"])
+def contact_delete(request, contact_id):
+    contact = get_object_or_404(request.user.contacts, id=contact_id)
+    contact_name = contact.name
+    print("boii")
+    contact.delete()
+    
+    # Return success message that will replace the deleted row
+    return HttpResponse(
+        f'''<tr id="success-message-{contact_id}">
+            <td colspan="5" class="text-center py-4">
+                <div class="alert alert-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span><strong>{contact_name}</strong> : has been deleted successfully.</span>
+                </div>
+            </td>
+        </tr>
+        <script>
+            setTimeout(function() {{
+                const element = document.getElementById('success-message-{contact_id}');
+                if (element) {{
+                    element.style.transition = 'opacity 0.5s ease-out';
+                    element.style.opacity = '0';
+                    setTimeout(function() {{
+                        element.remove();
+                    }}, 500);
+                }}
+            }}, 3000);
+        </script>'''
+    )
