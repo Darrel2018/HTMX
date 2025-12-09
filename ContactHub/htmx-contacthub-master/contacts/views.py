@@ -58,7 +58,6 @@ def create_contact(request):
 def contact_delete(request, contact_id):
     contact = get_object_or_404(request.user.contacts, id=contact_id)
     contact_name = contact.name
-    print("boii")
     contact.delete()
     
     # Return success message that will replace the deleted row
