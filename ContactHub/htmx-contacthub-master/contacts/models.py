@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from cloudinary.models import CloudinaryField
+from django.core.validators import FileExtensionValidator
 
 
 class User(AbstractUser):
@@ -8,6 +10,16 @@ class User(AbstractUser):
 class Contact(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
+
+    # Edited field to use Cloudinary
+    document = CloudinaryField(
+        'document',
+        resource_type='raw',  # Use 'raw' for documents like pdf, docx, txt, images
+        validators=[FileExtensionValidator(['pdf', 'doc', 'docx', 'txt', 'jpg', 'png'])],
+        blank=True,
+        null=True
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
         User,

@@ -18,6 +18,13 @@ class ContactForm(forms.ModelForm):
         })
     )
 
+    document = forms.FileField(
+        widget=forms.FileInput(attrs={
+            'class': 'file-input file-input-bordered w-full',
+        }),
+        required=False
+    )
+
     def clean_name(self):
         name = self.cleaned_data['name']
         # Check if the email already exists for this user
@@ -35,5 +42,5 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = (
-            'name', 'email'
+            'name', 'email', 'document'
         )
