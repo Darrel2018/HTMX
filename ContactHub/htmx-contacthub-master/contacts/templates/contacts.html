@@ -49,3 +49,29 @@
 </script>
 
 {% endblock %}
+
+<!--
+Here’s a concise summary of what the code does:
+
+---
+
+### **Summary**
+
+This Django template renders a **Contact Manager** interface. It includes:
+
+* A page title and a button that opens a modal for adding new contacts.
+* A **search input** powered by **HTMX**, which sends requests to the `search` URL as the user types, updates the contacts list dynamically, 
+and shows a loading spinner.
+* Included partial templates for:
+
+  * The **add-contact modal**
+  * The **loading spinner**
+  * The **contact list**
+
+The script listens for custom HTMX events:
+
+* On **"fail"**, it reopens the contact modal.
+* On **"success"**, it removes the “no contacts” placeholder row if it exists.
+
+Overall, it provides a dynamic, responsive interface for adding and searching contacts without full-page reloads.
+-->

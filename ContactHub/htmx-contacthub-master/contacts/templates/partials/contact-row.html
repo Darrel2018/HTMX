@@ -27,3 +27,23 @@
         </div>
     </td>
 </tr>
+
+<!--
+Here’s a concise summary of what this code does:
+
+---
+
+### **Summary**
+
+This template defines a **single contact row** in the contacts table. It includes:
+
+* **Contact details:** name, email, formatted creation date, and document link (or a “No document” message if none exists).
+* A **Delete** button powered by **HTMX**, which:
+
+  * Sends an `hx-delete` request to the `contact_delete` URL for the specific contact.
+  * Targets the table row itself and replaces it (`hx-swap="outerHTML"`) upon deletion.
+  * Displays a confirmation dialog with the contact’s name.
+  * Includes CSRF protection via custom headers.
+
+Overall, the row displays contact information and enables seamless, inline deletion without a page refresh.
+-->
